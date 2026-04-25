@@ -5,11 +5,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scarlet's File</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
 </head>
-<body>
-    <div>
-        <img class="mainBg" src="assets/fileScarlet.png" alt="Scarlet's Case File">
+
+<body class="case-page">
+
+    <!-- Background -->
+    <img class="mainBg" src="assets/fileScarlet.png" alt="Scarlet Case File">
+
+    <!-- Content -->
+    <div class="scarlet-file">
+
+        <!-- LEFT SIDE -->
+        <div class="suspect-left">
+            <p class="case-label">Suspect File</p>
+            <h1>Scarlet</h1>
+            <h2>Head of Security</h2>
+
+            <div class="info-box">
+                <p><strong>Suspect No:</strong> 03</p>
+                <p><strong>Occupation:</strong> Head of Security</p>
+                <p><strong>Age:</strong> 34</p>
+                <p><strong>Gender:</strong> Female</p>
+                <p><strong>Status:</strong> Suspect and witness</p>
+                <p><strong>Last Seen:</strong> Near the study</p>
+            </div>
+
+            <div class="notes-box">
+                <h3>Profile Notes</h3>
+                <p>
+                    Scarlet is gruff, practical, and no-nonsense. She feels out of place among the wealthy guests,
+                    but her job has trained her to notice small details others ignore.
+                </p>
+            </div>
+
+            <div class="notes-box">
+                <h3>Assessment</h3>
+                <p><strong>Credibility:</strong> Uncertain</p>
+                <p><strong>Suspicion Level:</strong> Medium</p>
+            </div>
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="suspect-right">
+
+            <h3>Interview Evidence</h3>
+
+            <!-- YouTube Video -->
+            <div class="case-video">
+                <iframe 
+                    src="https://www.youtube.com/embed/mtL7m-I32AE"
+                    title="Scarlet Interview"
+                    allowfullscreen>
+                </iframe>
+            </div>
+
+            <div class="statement-box">
+                <h3>Statement Summary</h3>
+                <p>
+                    Scarlet claims she saw a flash of movement in the study and caught the thief’s face reflected
+                    in the painting’s glass. She shouted and ran in, but by the time she reached the frame, the
+                    room was empty and the canvas was gone.
+                </p>
+            </div>
+
+            <div class="statement-box">
+                <h3>Observation</h3>
+                <p>
+                    The lack of sound or forced entry raises questions. Either the intruder was highly skilled,
+                    or Scarlet’s account is incomplete.
+                </p>
+            </div>
+
+        </div>
+
     </div>
+
 </body>
 </html>
