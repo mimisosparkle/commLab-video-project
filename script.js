@@ -37,105 +37,78 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-  
+    // --- Solve case ---
+    const solveCaseBtn  = document.getElementById('solve-case-btn');
+    const solveModal    = document.getElementById('solve-modal');
+    const solveQuestion = document.getElementById('solve-question');
+    const solveResult   = document.getElementById('solve-result');
+    const resultLabel   = document.getElementById('result-label');
+    const resultTitle   = document.getElementById('result-title');
+    const resultBody    = document.getElementById('result-body');
+    const resultClose   = document.getElementById('result-close');
+
+    if (solveCaseBtn) {
+        solveCaseBtn.addEventListener('click', () => {
+            solveModal.classList.add('active');
+            solveCaseBtn.classList.add('hidden');
+        });
+
+        solveModal.addEventListener('click', e => {
+            if (e.target === solveModal) resetSolveModal();
+        });
+
     
-// --- Solve case ---
-const solveCaseBtn  = document.getElementById('solve-case-btn');
-const solveModal    = document.getElementById('solve-modal');
-const solveQuestion = document.getElementById('solve-question');
-const solveResult   = document.getElementById('solve-result');
-const newEvidence   = document.getElementById('new-evidence');
+        let firstAttempt = true;
 
-const resultLabel   = document.getElementById('result-label');
-const resultTitle   = document.getElementById('result-title');
-const resultBody    = document.getElementById('result-body');
-const resultClose   = document.getElementById('result-close');
-const rethinkBtn    = document.getElementById('rethink-btn');
+const newEvidence = document.getElementById('new-evidence');
+const rethinkBtn = document.getElementById('rethink-btn');
 
-let firstAttempt = true;
+document.querySelectorAll('.suspect-choice').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const suspect = btn.dataset.suspect;
 
+        if (firstAttempt) {
+            firstAttempt = false;
 
-function hideAll() {
-    solveQuestion.classList.add('hidden');
-    solveResult.classList.add('hidden');
-    newEvidence.classList.add('hidden');
-}
+            solveQuestion.style.display = 'none';
+            newEvidence.classList.remove('hidden');
 
-function showQuestion() {
-    hideAll();
-    solveQuestion.classList.remove('hidden');
-}
+        } else {
+            solveQuestion.style.display = 'none';
+            newEvidence.classList.add('hidden');
+            solveResult.classList.remove('hidden');
 
-function showEvidence() {
-    hideAll();
-    newEvidence.classList.remove('hidden');
-}
-
-function showResult(suspect) {
-    hideAll();
-    solveResult.classList.remove('hidden');
-
-    if (suspect === 'scarlet') {
-        resultLabel.style.color = '#6a9e6a';
-        resultLabel.textContent = 'Case Closed';
-        resultTitle.textContent = 'You got it.';
-        resultBody.textContent =
-            "Scarlet claimed she saw the thief's face reflected in the painting's glass, but the Insurance Appraisal confirms it was covered by Moth-Eye Nano-Structured Glass, engineered to produce zero reflection. She described a physical impossibility. Scarlet stole the Vermeer.";
-    } else {
-        resultLabel.style.color = '#9e6a6a';
-        resultLabel.textContent = 'Wrong Suspect';
-        resultTitle.textContent = 'Not quite.';
-        resultBody.textContent =
-            "The evidence does not point there. Look closer at the case files. One suspect described something that could not have happened.";
-    }
-}
-
-function resetSolveModal() {
-    solveModal.classList.remove('active');
-    solveCaseBtn.classList.remove('hidden');
-    firstAttempt = true;
-    showQuestion();
-}
-
-if (solveCaseBtn) {
-
-    solveCaseBtn.addEventListener('click', () => {
-        solveModal.classList.add('active');
-        solveCaseBtn.classList.add('hidden');
-
-        firstAttempt = true;
-        showQuestion();
-    });
-
-   
-    solveModal.addEventListener('click', e => {
-        if (e.target === solveModal) resetSolveModal();
-    });
-
-    // ONLY TARGET THE REAL SUSPECT BUTTONS
-    document.querySelectorAll('#suspect-btns .suspect-choice').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const suspect = btn.dataset.suspect;
-
-            if (firstAttempt) {
-                firstAttempt = false;
-                showEvidence();     // FIRST CLICK
+            if (suspect === 'scarlet') {
+                resultLabel.style.color = '#6a9e6a';
+                resultLabel.textContent = 'Case Closed';
+                resultTitle.textContent = 'You got it.';
+                resultBody.textContent = 'Scarlet claimed she saw the thief\'s face reflected in the painting\'s glass — but the Insurance Appraisal confirms it was covered by Moth-Eye Nano-Structured Glass, engineered to produce zero reflection. She described a physical impossibility. Scarlet stole the Vermeer.';
             } else {
-                showResult(suspect); // SECOND CLICK
+                resultLabel.style.color = '#9e6a6a';
+                resultLabel.textContent = 'Wrong Suspect';
+                resultTitle.textContent = 'Not quite.';
+                resultBody.textContent = 'The evidence doesn\'t point there. Look closer at the case files — one suspect described something that couldn\'t have happened.';
             }
-        });
+        }
     });
+});
 
-    // RECONSIDER BUTTON
-    if (rethinkBtn) {
-        rethinkBtn.addEventListener('click', () => {
-            showQuestion();
-        });
+rethinkBtn.addEventListener('click', () => {
+    newEvidence.classList.add('hidden');
+    solveQuestion.style.display = '';
+});
+        resultClose.addEventListener('click', resetSolveModal);
+
+        function resetSolveModal() {
+            solveModal.classList.remove('active');
+            solveCaseBtn.classList.remove('hidden');
+            setTimeout(() => {
+                solveQuestion.style.display = '';
+                solveResult.classList.add('hidden');
+            }, 300);
+        }
     }
 
-    // CLOSE RESULT BUTTON
-    resultClose.addEventListener('click', resetSolveModal);
-}
     // --- Evidence board ---
     const container = document.querySelector('.images-container');
     if (!container) return;
