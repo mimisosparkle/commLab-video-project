@@ -55,12 +55,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         solveModal.addEventListener('click', e => {
             if (e.target === solveModal) resetSolveModal();
-        });
+        }); 
 
-       let firstAttempt = true;
+        function showOnly(screen) {
+    solveQuestion.classList.add('hidden');
+    solveResult.classList.add('hidden');
+    newEvidence.classList.add('hidden');
 
-const newEvidence = document.getElementById('new-evidence');
-const rethinkBtn = document.getElementById('rethink-btn');
+    screen.classList.remove('hidden');
+}
+
+      let firstAttempt = true;
 
 document.querySelectorAll('.suspect-choice').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -69,23 +74,17 @@ document.querySelectorAll('.suspect-choice').forEach(btn => {
 
         const suspect = btn.dataset.suspect;
 
-        // reset ALL states first
-        solveQuestion.classList.add('hidden');
-        solveResult.classList.add('hidden');
-        newEvidence.classList.add('hidden');
-
         if (firstAttempt) {
             firstAttempt = false;
 
-            // ONLY show evidence
-            // SECOND ATTEMPT → show result
+            // 👉 ONLY show evidence
+            showOnly(newEvidence);
+            return;
+        }
 
-// 🚨 hide EVERYTHING first
-solveQuestion.classList.add('hidden');
-newEvidence.classList.add('hidden');
+        // 👉 SECOND ATTEMPT → ONLY show result
+        showOnly(solveResult);
 
-// THEN show result
-solveResult.classList.remove('hidden');
         if (suspect === 'scarlet') {
             resultLabel.style.color = '#6a9e6a';
             resultLabel.textContent = 'Case Closed';
@@ -102,10 +101,7 @@ solveResult.classList.remove('hidden');
 });
         
 rethinkBtn.addEventListener('click', () => {
-
-    newEvidence.classList.add('hidden');
-    solveQuestion.classList.remove('hidden');
-
+    showOnly(solveQuestion);
 });
 
         resultClose.addEventListener('click', resetSolveModal);
@@ -116,11 +112,7 @@ rethinkBtn.addEventListener('click', () => {
 
     setTimeout(() => {
         firstAttempt = true;
-
-        solveQuestion.classList.remove('hidden');
-        solveResult.classList.add('hidden');
-        newEvidence.classList.add('hidden');
-
+        showOnly(solveQuestion);
     }, 300);
 }
     }
