@@ -58,43 +58,43 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
      
-       let firstAttempt = true;
+        let firstAttempt = true;
 
 const newEvidence = document.getElementById('new-evidence');
 const rethinkBtn = document.getElementById('rethink-btn');
 
+
 function showScreen(screen) {
-    // hide EVERYTHING first
     solveQuestion.classList.add('hidden');
     solveResult.classList.add('hidden');
     newEvidence.classList.add('hidden');
 
-
     screen.classList.remove('hidden');
 }
 
-// OPEN MODAL → ALWAYS START CLEAN
+
 solveCaseBtn.addEventListener('click', () => {
     solveModal.classList.add('active');
     solveCaseBtn.classList.add('hidden');
 
     firstAttempt = true;
-    showScreen(solveQuestion); // ONLY quiz
+    showScreen(solveQuestion);
 });
 
-//  CLICK SUSPECT
+//  SUSPECT BUTTONS
 document.querySelectorAll('#suspect-btns .suspect-choice').forEach(btn => {
     btn.addEventListener('click', () => {
+
         const suspect = btn.dataset.suspect;
 
-        // FIRST CLICK → evidence ONLY
+        // FIRST CLICK → evidence
         if (firstAttempt) {
             firstAttempt = false;
             showScreen(newEvidence);
             return;
         }
 
-        // SECOND CLICK
+        // SECOND CLICK 
         showScreen(solveResult);
 
         if (suspect === 'scarlet') {
@@ -113,19 +113,24 @@ document.querySelectorAll('#suspect-btns .suspect-choice').forEach(btn => {
     });
 });
 
-//  RECONSIDER → BACK TO CLEAN QUIZ
+//  RECONSIDER BUTTON
 rethinkBtn.addEventListener('click', () => {
     showScreen(solveQuestion);
 });
 
-//  CLOSE → FULL RESET
-resultClose.addEventListener('click', () => {
+//  RESET MODAL
+resultClose.addEventListener('click', resetSolveModal);
+
+function resetSolveModal() {
     solveModal.classList.remove('active');
     solveCaseBtn.classList.remove('hidden');
 
-    firstAttempt = true;
-    showScreen(solveQuestion);
-});
+    setTimeout(() => {
+        firstAttempt = true;
+        showScreen(solveQuestion);
+    }, 300);
+}
+
     // --- Evidence board ---
     const container = document.querySelector('.images-container');
     if (!container) return;
