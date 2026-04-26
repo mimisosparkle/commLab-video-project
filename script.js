@@ -57,59 +57,61 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.target === solveModal) resetSolveModal();
         });
 
-        let firstAttempt = true;
-
-const newEvidence = document.getElementById('new-evidence');
-const rethinkBtn = document.getElementById('rethink-btn');
-
-let firstAttempt = true;
+       let firstAttempt = true;
 
 const newEvidence = document.getElementById('new-evidence');
 const rethinkBtn = document.getElementById('rethink-btn');
 
 document.querySelectorAll('.suspect-choice').forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (e) => {
 
-        // This stops the reconsider button from acting like a suspect choice
         if (btn.id === 'rethink-btn') return;
 
         const suspect = btn.dataset.suspect;
 
+        // ALWAYS reset everything first
+        solveQuestion.style.display = 'none';
+        solveResult.classList.add('hidden');
+        newEvidence.classList.add('hidden');
+
         if (firstAttempt) {
             firstAttempt = false;
 
-            solveQuestion.style.display = 'none';
-            solveResult.classList.add('hidden');
-            newEvidence.classList.remove('hidden');
+            // show ONLY evidence
+            newEvidence.style.display = 'block';
 
-        } else {
-            solveQuestion.style.display = 'none';
-            newEvidence.classList.add('hidden');
-            solveResult.classList.remove('hidden');
-
-            if (suspect === 'scarlet') {
-                resultLabel.style.color = '#6a9e6a';
-                resultLabel.textContent = 'Case Closed';
-                resultTitle.textContent = 'You got it.';
-                resultBody.textContent = 'Scarlet claimed she saw the thief\'s face reflected in the painting\'s glass, but the Insurance Appraisal confirms it was covered by Moth-Eye Nano-Structured Glass, engineered to produce zero reflection. She described a physical impossibility. Scarlet stole the Vermeer.';
-            } else {
-                resultLabel.style.color = '#9e6a6a';
-                resultLabel.textContent = 'Wrong Suspect';
-                resultTitle.textContent = 'Not quite.';
-                resultBody.textContent = 'The evidence does not point there. Look closer at the case files. One suspect described something that could not have happened.';
-            }
+            return;
         }
+
+        // SECOND ATTEMPT
+        solveResult.style.display = 'block';
+        solveResult.classList.remove('hidden');
+
+        if (suspect === 'scarlet') {
+            resultLabel.style.color = '#6a9e6a';
+            resultLabel.textContent = 'Case Closed';
+            resultTitle.textContent = 'You got it.';
+            resultBody.textContent = 'Scarlet claimed she saw the thief\'s face reflected in the painting\'s glass, but the Insurance Appraisal confirms it was covered by Moth-Eye Nano-Structured Glass, engineered to produce zero reflection. She described a physical impossibility. Scarlet stole the Vermeer.';
+        } else {
+            resultLabel.style.color = '#9e6a6a';
+            resultLabel.textContent = 'Wrong Suspect';
+            resultTitle.textContent = 'Not quite.';
+            resultBody.textContent = 'The evidence does not point there. Look closer at the case files. One suspect described something that could not have happened.';
+        }
+
     });
 });
+        
+rethinkBtn.addEventListener('click', () => {
 
-rethinkBtn.addEventListener('click', () => {
-    newEvidence.classList.add('hidden');
-    solveQuestion.style.display = '';
+    // hide evidence
+    newEvidence.style.display = 'none';
+
+    // show choices again cleanly
+    solveQuestion.style.display = 'block';
+
 });
-rethinkBtn.addEventListener('click', () => {
-    newEvidence.classList.add('hidden');
-    solveQuestion.style.display = '';
-});
+
         resultClose.addEventListener('click', resetSolveModal);
 
         function resetSolveModal() {
