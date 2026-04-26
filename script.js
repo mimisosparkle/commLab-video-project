@@ -1,6 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     const container = document.querySelector('.images-container');
+    if (!container) return;
+
     const anchors = [...document.querySelectorAll('.images-container a')];
+    const popupImgs = [...document.querySelectorAll('.images-container [data-popup]')];
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modal-img');
     const canvasCache = new Map();
 
     function getCanvas(img) {
@@ -33,23 +38,55 @@ document.addEventListener('DOMContentLoaded', () => {
         return null;
     }
 
+    function getHitPopup(clientX, clientY) {
+        for (const img of popupImgs) {
+            if (isOpaqueAt(img, clientX, clientY)) return img;
+        }
+        return null;
+    }
+
+    function openModal(src, alt) {
+        modalImg.src = src;
+        modalImg.alt = alt;
+        modal.classList.add('active');
+    }
+
+    function closeModal() {
+        modal.classList.remove('active');
+        modalImg.src = '';
+    }
+
+    document.querySelector('.modal-close').addEventListener('click', closeModal);
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
     anchors.forEach(a => a.addEventListener('click', e => e.preventDefault()));
 
     container.addEventListener('click', e => {
         const anchor = getHitAnchor(e.clientX, e.clientY);
-        if (anchor) window.location.href = anchor.href;
+        if (anchor) { window.location.href = anchor.href; return; }
+
+        const popup = getHitPopup(e.clientX, e.clientY);
+        if (popup) openModal(popup.dataset.popupSrc || popup.src, popup.alt);
     });
 
     container.addEventListener('mousemove', e => {
-        const hit = getHitAnchor(e.clientX, e.clientY);
+        const hitAnchor = getHitAnchor(e.clientX, e.clientY);
         anchors.forEach(a => {
-            a.querySelector('img').style.filter = a === hit ? 'brightness(1.2)' : '';
+            a.querySelector('img').style.filter = a === hitAnchor ? 'brightness(1.2)' : '';
         });
-        container.style.cursor = hit ? 'pointer' : '';
+
+        const hitPopup = hitAnchor ? null : getHitPopup(e.clientX, e.clientY);
+        popupImgs.forEach(img => {
+            img.style.filter = img === hitPopup ? 'brightness(1.2)' : '';
+        });
+
+        container.style.cursor = (hitAnchor || hitPopup) ? 'pointer' : '';
     });
 
     container.addEventListener('mouseleave', () => {
         anchors.forEach(a => a.querySelector('img').style.filter = '');
+        popupImgs.forEach(img => img.style.filter = '');
         container.style.cursor = '';
     });
 });
