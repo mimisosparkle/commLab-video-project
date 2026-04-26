@@ -44,6 +44,144 @@
     filter: brightness(1.2); /* photo lights up */
 }
 
+/* --- Intro Overlay --- */
+
+#intro-overlay {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 1.2s ease;
+}
+
+#intro-overlay.dismissed {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#intro-screen {
+    text-align: center;
+    font-family: Georgia, serif;
+    transition: opacity 0.6s ease;
+}
+
+#intro-screen.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.intro-eyebrow {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 24px;
+}
+
+.intro-title {
+    font-size: 58px;
+    font-weight: normal;
+    color: #f5f0e8;
+    margin-bottom: 18px;
+}
+
+.intro-desc {
+    font-size: 17px;
+    line-height: 1.8;
+    color: #999;
+    margin-bottom: 52px;
+}
+
+#watch-btn, #solve-btn {
+    background: transparent;
+    color: #f5f0e8;
+    border: 1px solid rgba(245, 240, 232, 0.45);
+    font-family: Georgia, serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 13px 32px;
+    cursor: pointer;
+    transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+#watch-btn:hover, #solve-btn:hover {
+    border-color: #f5f0e8;
+    background: rgba(245, 240, 232, 0.07);
+}
+
+#video-screen {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 24px;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+#video-screen.visible {
+    opacity: 1;
+}
+
+.footage-header {
+    color: #dd2222;
+    font-family: monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.rec-dot {
+    width: 8px;
+    height: 8px;
+    background: #dd2222;
+    border-radius: 50%;
+    animation: blink 1s step-start infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+#crime-video {
+    max-width: 90vw;
+    max-height: 75vh;
+    display: block;
+}
+
+#after-video-msg {
+    margin-top: 32px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+}
+
+#after-video-msg.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+@keyframes crt-on {
+    0%   { opacity: 0; filter: brightness(5) blur(6px); }
+    15%  { opacity: 1; filter: brightness(0.3); }
+    30%  { opacity: 0.7; filter: brightness(2.5); }
+    50%  { opacity: 0.5; filter: brightness(0.6); }
+    70%  { opacity: 1; filter: brightness(1.4); }
+    85%  { opacity: 0.9; filter: brightness(0.9); }
+    100% { opacity: 1; filter: brightness(1); }
+}
+
+.crt-on {
+    animation: crt-on 0.8s ease forwards;
+}
+
 /* --- Modal Popup --- */
 
 .modal-overlay {
