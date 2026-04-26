@@ -47,89 +47,86 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultBody    = document.getElementById('result-body');
     const resultClose   = document.getElementById('result-close');
 
+    const newEvidence = document.getElementById('new-evidence');
+    const rethinkBtn  = document.getElementById('rethink-btn');
+
+    let firstAttempt = true;
+
+    //  no overlap
+    function showScreen(screen) {
+        solveQuestion.classList.add('hidden');
+        solveResult.classList.add('hidden');
+        newEvidence.classList.add('hidden');
+
+        screen.classList.remove('hidden');
+    }
+
     if (solveCaseBtn) {
+
+    
         solveCaseBtn.addEventListener('click', () => {
             solveModal.classList.add('active');
             solveCaseBtn.classList.add('hidden');
+
+            firstAttempt = true;
+            showScreen(solveQuestion);
         });
 
+        // close
         solveModal.addEventListener('click', e => {
             if (e.target === solveModal) resetSolveModal();
         });
 
-     
-        let firstAttempt = true;
+        // buttons
+        document.querySelectorAll('#suspect-btns .suspect-choice').forEach(btn => {
+            btn.addEventListener('click', () => {
 
-const newEvidence = document.getElementById('new-evidence');
-const rethinkBtn = document.getElementById('rethink-btn');
+                const suspect = btn.dataset.suspect;
 
+                // FIRST CLICK 
+                if (firstAttempt) {
+                    firstAttempt = false;
+                    showScreen(newEvidence);
+                    return;
+                }
 
-function showScreen(screen) {
-    solveQuestion.classList.add('hidden');
-    solveResult.classList.add('hidden');
-    newEvidence.classList.add('hidden');
+                // SECOND CLICK 
+                showScreen(solveResult);
 
-    screen.classList.remove('hidden');
-}
+                if (suspect === 'scarlet') {
+                    resultLabel.style.color = '#6a9e6a';
+                    resultLabel.textContent = 'Case Closed';
+                    resultTitle.textContent = 'You got it.';
+                    resultBody.textContent =
+                        "Scarlet described seeing a reflection in glass that produces none. That’s impossible. She’s the thief.";
+                } else {
+                    resultLabel.style.color = '#9e6a6a';
+                    resultLabel.textContent = 'Wrong Suspect';
+                    resultTitle.textContent = 'Not quite.';
+                    resultBody.textContent =
+                        "Look closer. One suspect described something that could not have happened.";
+                }
+            });
+        });
 
+        // RECONSIDER
+        rethinkBtn.addEventListener('click', () => {
+            showScreen(solveQuestion);
+        });
 
-solveCaseBtn.addEventListener('click', () => {
-    solveModal.classList.add('active');
-    solveCaseBtn.classList.add('hidden');
+        // RESET
+        resultClose.addEventListener('click', resetSolveModal);
 
-    firstAttempt = true;
-    showScreen(solveQuestion);
-});
+        function resetSolveModal() {
+            solveModal.classList.remove('active');
+            solveCaseBtn.classList.remove('hidden');
 
-//  SUSPECT BUTTONS
-document.querySelectorAll('#suspect-btns .suspect-choice').forEach(btn => {
-    btn.addEventListener('click', () => {
-
-        const suspect = btn.dataset.suspect;
-
-        // FIRST CLICK → evidence
-        if (firstAttempt) {
-            firstAttempt = false;
-            showScreen(newEvidence);
-            return;
+            setTimeout(() => {
+                firstAttempt = true;
+                showScreen(solveQuestion);
+            }, 300);
         }
-
-        // SECOND CLICK 
-        showScreen(solveResult);
-
-        if (suspect === 'scarlet') {
-            resultLabel.style.color = '#6a9e6a';
-            resultLabel.textContent = 'Case Closed';
-            resultTitle.textContent = 'You got it.';
-            resultBody.textContent =
-                "Scarlet described seeing a reflection in glass that produces none. That’s impossible. She’s the thief.";
-        } else {
-            resultLabel.style.color = '#9e6a6a';
-            resultLabel.textContent = 'Wrong Suspect';
-            resultTitle.textContent = 'Not quite.';
-            resultBody.textContent =
-                "Look closer. One suspect described something that could not have happened.";
-        }
-    });
-});
-
-//  RECONSIDER BUTTON
-rethinkBtn.addEventListener('click', () => {
-    showScreen(solveQuestion);
-});
-
-//  RESET MODAL
-resultClose.addEventListener('click', resetSolveModal);
-
-function resetSolveModal() {
-    solveModal.classList.remove('active');
-    solveCaseBtn.classList.remove('hidden');
-
-    setTimeout(() => {
-        firstAttempt = true;
-        showScreen(solveQuestion);
-    }, 300);
-}
+    }
 
     // --- Evidence board ---
     const container = document.querySelector('.images-container');
@@ -224,4 +221,5 @@ function resetSolveModal() {
         popupImgs.forEach(img => img.style.filter = '');
         container.style.cursor = '';
     });
+
 });
