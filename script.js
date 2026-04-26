@@ -55,87 +55,85 @@ const rethinkBtn    = document.getElementById('rethink-btn');
 let firstAttempt = true;
 
 
-function hideAllSolveScreens() {
-    solveQuestion.style.display = 'none';
-    solveResult.style.display = 'none';
-    newEvidence.style.display = 'none';
+function hideAll() {
+    solveQuestion.classList.add('hidden');
+    solveResult.classList.add('hidden');
+    newEvidence.classList.add('hidden');
 }
 
-//  show question
 function showQuestion() {
-    hideAllSolveScreens();
-    solveQuestion.style.display = 'block';
+    hideAll();
+    solveQuestion.classList.remove('hidden');
 }
 
-//  show new evidence
 function showEvidence() {
-    hideAllSolveScreens();
-    newEvidence.style.display = 'block';
+    hideAll();
+    newEvidence.classList.remove('hidden');
 }
 
-//  show final result
 function showResult(suspect) {
-    hideAllSolveScreens();
-    solveResult.style.display = 'block';
+    hideAll();
+    solveResult.classList.remove('hidden');
 
     if (suspect === 'scarlet') {
         resultLabel.style.color = '#6a9e6a';
         resultLabel.textContent = 'Case Closed';
         resultTitle.textContent = 'You got it.';
-        resultBody.textContent = "Scarlet claimed she saw the thief's face reflected in the painting's glass, but the Insurance Appraisal confirms it was covered by Moth-Eye Nano-Structured Glass, engineered to produce zero reflection. She described a physical impossibility. Scarlet stole the Vermeer.";
+        resultBody.textContent =
+            "Scarlet claimed she saw the thief's face reflected in the painting's glass, but the Insurance Appraisal confirms it was covered by Moth-Eye Nano-Structured Glass, engineered to produce zero reflection. She described a physical impossibility. Scarlet stole the Vermeer.";
     } else {
         resultLabel.style.color = '#9e6a6a';
         resultLabel.textContent = 'Wrong Suspect';
         resultTitle.textContent = 'Not quite.';
-        resultBody.textContent = 'The evidence does not point there. Look closer at the case files. One suspect described something that could not have happened.';
+        resultBody.textContent =
+            "The evidence does not point there. Look closer at the case files. One suspect described something that could not have happened.";
     }
 }
-
 
 function resetSolveModal() {
     solveModal.classList.remove('active');
     solveCaseBtn.classList.remove('hidden');
-
     firstAttempt = true;
     showQuestion();
 }
 
 if (solveCaseBtn) {
 
-    // OPEN MODAL
     solveCaseBtn.addEventListener('click', () => {
         solveModal.classList.add('active');
         solveCaseBtn.classList.add('hidden');
 
         firstAttempt = true;
-        showQuestion(); 
+        showQuestion();
     });
 
-    // CLICK OUTSIDE CLOSE
+   
     solveModal.addEventListener('click', e => {
         if (e.target === solveModal) resetSolveModal();
     });
 
-    // SUSPECT BUTTONS 
+    // ONLY TARGET THE REAL SUSPECT BUTTONS
     document.querySelectorAll('#suspect-btns .suspect-choice').forEach(btn => {
         btn.addEventListener('click', () => {
             const suspect = btn.dataset.suspect;
 
             if (firstAttempt) {
                 firstAttempt = false;
-                showEvidence(); // FIRST CLICK → evidence only
+                showEvidence();     // FIRST CLICK
             } else {
-                showResult(suspect); // SECOND CLICK → result
+                showResult(suspect); // SECOND CLICK
             }
         });
     });
 
     // RECONSIDER BUTTON
-    rethinkBtn.addEventListener('click', () => {
-        showQuestion();
-    });
+    if (rethinkBtn) {
+        rethinkBtn.addEventListener('click', () => {
+            showQuestion();
+        });
+    }
 
-    // CLOSE RESULT
+    // CLOSE RESULT BUTTON
     resultClose.addEventListener('click', resetSolveModal);
 }
     // --- Evidence board ---
