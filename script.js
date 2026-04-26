@@ -5,16 +5,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (overlay && new URLSearchParams(window.location.search).has('skip')) {
         overlay.remove();
     } else if (overlay) {
-     const solveCaseBtn  = document.getElementById('solve-case-btn');
-const solveModal    = document.getElementById('solve-modal');
-const solveQuestion = document.getElementById('solve-question');
-const solveResult   = document.getElementById('solve-result');
-const resultLabel   = document.getElementById('result-label');
-const resultTitle   = document.getElementById('result-title');
-const resultBody    = document.getElementById('result-body');
-const resultClose   = document.getElementById('result-close');
-const newEvidence   = document.getElementById('new-evidence');
-const rethinkBtn    = document.getElementById('rethink-btn');
+        const introScreen  = document.getElementById('intro-screen');
+        const videoScreen  = document.getElementById('video-screen');
+        const crimeVideo   = document.getElementById('crime-video');
+        const afterMsg     = document.getElementById('after-video-msg');
+        const watchBtn     = document.getElementById('watch-btn');
+        const solveBtn     = document.getElementById('solve-btn');
 
         watchBtn.addEventListener('click', () => {
             introScreen.classList.add('fade-out');
@@ -42,7 +38,7 @@ const rethinkBtn    = document.getElementById('rethink-btn');
     }
 
   
-    // --- Solve case ---
+    
 // --- Solve case ---
 const solveCaseBtn  = document.getElementById('solve-case-btn');
 const solveModal    = document.getElementById('solve-modal');
