@@ -53,13 +53,19 @@ document.addEventListener('DOMContentLoaded', () => {
     let firstAttempt = true;
 
     //  no overlap
-    function showScreen(screen) {
-        solveQuestion.classList.add('hidden');
-        solveResult.classList.add('hidden');
-        newEvidence.classList.add('hidden');
+  function showScreen(screen) {
+    // reset
+    solveQuestion.classList.add('hidden');
+    solveResult.classList.add('hidden');
+    newEvidence.classList.add('hidden');
 
-        screen.classList.remove('hidden');
-    }
+    solveQuestion.style.display = 'none';
+    solveResult.style.display = 'none';
+    newEvidence.style.display = 'none';
+
+    screen.classList.remove('hidden');
+    screen.style.display = 'block';
+}
 
     if (solveCaseBtn) {
 
