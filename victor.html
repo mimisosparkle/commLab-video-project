@@ -5,12 +5,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Victor's File</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
 </head>
-<body>
+
+<body class="case-page" style="background: url('assets/fileVictor.png') no-repeat top center / 100% auto;">
+
     <a class="back-btn" href="index.html">&#8592; Back</a>
-    <div>
-        <img class="mainBg" src="assets/fileVictor.png" alt="Victor's Case File">
+
+    <!-- Content -->
+    <div class="case-file">
+
+        <!-- LEFT SIDE -->
+        <div class="suspect-left">
+            <p class="case-label">Suspect File</p>
+            <h1>Victor</h1>
+            <h2>Disgraced Art Critic</h2>
+
+            <div class="info-box">
+                <p><strong>Suspect No:</strong> 01</p>
+                <p><strong>Occupation:</strong> Art Critic (Disgraced)</p>
+                <p><strong>Gender:</strong> Male</p>
+                <p><strong>Status:</strong> Suspect</p>
+                <p><strong>Last Seen:</strong> Terrace at 10:15 PM</p>
+            </div>
+
+            <div class="notes-box">
+                <h3>Profile Notes</h3>
+                <p>
+                    Victor is arrogant, verbose, and acutely aware of his fall from relevance.
+                    He speaks in paragraphs and treats every conversation as a lecture.
+                    His expertise is real, but his ego makes him difficult to trust.
+                </p>
+            </div>
+
+            <div class="notes-box">
+                <h3>Assessment</h3>
+                <p><strong>Credibility:</strong> Likely truthful</p>
+                <p><strong>Suspicion Level:</strong> Low</p>
+            </div>
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="suspect-right">
+
+            <h3>Interview Evidence</h3>
+
+            <!-- YouTube Video -->
+            <div class="case-video">
+                <iframe
+                    src=""
+                    title="Victor Interview"
+                    allowfullscreen>
+                </iframe>
+            </div>
+
+            <div class="statement-box">
+                <h3>Statement Summary</h3>
+                <p>
+                    Victor claims he entered the study at 9:55 PM to examine the painting's authenticity,
+                    suspecting it was made by a student rather than Vermeer. A guest bumped his arm and he
+                    spilled coffee on the frame. He retreated to the washroom for 10–15 minutes, then moved
+                    to the terrace — where a server can confirm he was present at 10:15 PM.
+                </p>
+            </div>
+
+            <div class="statement-box">
+                <h3>Observation</h3>
+                <p>
+                    Victor's complaint about the study's heat is consistent with the floor plan — the room
+                    is small and poorly ventilated. This corroborates rather than undermines his account.
+                    His alibi has a named witness and a precise timestamp.
+                </p>
+            </div>
+
+        </div>
+
     </div>
+
 </body>
 </html>
