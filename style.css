@@ -496,3 +496,55 @@
     padding-top: 10px;
     margin-top: 10px;
 }
+
+/* -- vermeer patining, main case file layout -- */
+
+/* single column */
+.case-file.single {
+    grid-template-columns: 1fr; 
+    max-width: 700px;
+    margin: 0 auto;
+    padding-top: 12%;
+}
+
+/* centering text */
+.case-title {
+    font-size: 38px;
+    margin-bottom: 4px;
+}
+
+.case-subtitle {
+    font-size: 15px;
+}
+
+/* centered in box */
+.center-box {
+    margin: 10px 10px 5px 5px;
+}
+
+.case-main h1 {
+    font-size: 40px;
+}
+
+.case-main h2 {
+    font-size: 18px;
+    margin-bottom: 18px;
+}
+
+/* Slightly tighter spacing for main file */
+.case-main .notes-box {
+    margin-bottom: 15px;
+}
+
+
+.content-box h3 {
+    font-size: 20px;
+    text-decoration: underline;
+    margin-bottom: 15px;
+}
+
+.content-box p {
+    font-size: 17px;
+    line-height: 1.4;
+    margin-bottom: 15px;
+}
