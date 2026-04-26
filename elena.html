@@ -7,10 +7,83 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
-<body>
+
+<body class="case-page" style="background: url('assets/fileElena.png') no-repeat top center / 100% auto;">
+
     <a class="back-btn" href="index.html">&#8592; Back</a>
-    <div>
-        <img class="mainBg" src="assets/fileElena.png" alt="Elena's Case File">
+
+    <!-- Content -->
+    <div class="case-file">
+
+        <!-- LEFT SIDE -->
+        <div class="suspect-left">
+            <p class="case-label">Suspect File</p>
+            <h1>Elena</h1>
+            <h2>Rival Gallery Owner</h2>
+
+            <div class="info-box">
+                <p><strong>Suspect No:</strong> 02</p>
+                <p><strong>Occupation:</strong> Gallery Owner</p>
+                <p><strong>Age:</strong> 28</p>
+                <p><strong>Gender:</strong> Female</p>
+                <p><strong>Status:</strong> Suspect</p>
+                <p><strong>Last Seen:</strong> Main hall (near piano)</p>
+            </div>
+
+            <div class="notes-box">
+                <h3>Profile Notes</h3>
+                <p>
+                    Elena is sharp, fast-talking, and highly critical. As a rival gallery owner, she has
+                    strong opinions about authenticity and reputation. She appears confident and dismissive,
+                    often downplaying the significance of the event.
+                </p>
+            </div>
+
+            <div class="notes-box">
+                <h3>Assessment</h3>
+                <p><strong>Credibility:</strong> Questionable</p>
+                <p><strong>Suspicion Level:</strong> Medium</p>
+            </div>
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="suspect-right">
+
+            <h3>Interview Evidence</h3>
+
+            <!-- LOCAL VIDEO -->
+       <div class="case-video" style="width: 100%; max-width: 800px; aspect-ratio: 16 / 9;">
+
+    <video controls style="width: 100%; height: 100%; border-radius: 8px;">
+        <source src="assets/Elenainterview.MOV" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+</div>
+
+
+
+            <div class="statement-box">
+                <h3>Statement Summary</h3>
+                <p>
+                    Elena claims she never entered the study during the gala and remained in the main hall.
+                    She mentions briefly seeing someone moving toward the service stairs around 10:00 PM,
+                    but could not identify them due to the crowd.
+                </p>
+            </div>
+
+            <div class="statement-box">
+                <h3>Observation</h3>
+                <p>
+                    Elena distances herself from the crime scene and provides minimal detail.
+                    Her confident tone and dismissive attitude may suggest she is withholding
+                    information or attempting to redirect attention.
+                </p>
+            </div>
+
+        </div>
+
     </div>
+
 </body>
 </html>
