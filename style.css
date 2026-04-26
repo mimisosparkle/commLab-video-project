@@ -44,6 +44,51 @@
     filter: brightness(1.2); /* photo lights up */
 }
 
+/* --- Modal Popup --- */
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.82);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-content {
+    position: relative;
+    max-width: 96vw;
+    max-height: 96vh;
+}
+
+.modal-content img {
+    width: 90vw;
+    max-height: 92vh;
+    object-fit: contain;
+    display: block;
+}
+
+.modal-close {
+    position: absolute;
+    top: -14px;
+    right: -14px;
+    width: 28px;
+    height: 28px;
+    background: #1f1a14;
+    color: #f5f0e8;
+    border: 1px solid #f5f0e8;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /* --- Back Button --- */
 
 .back-btn {
