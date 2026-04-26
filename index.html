@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
+<script src="script.js" defer></script>
 <body>
     <div class="images-container">
     <img src="assets/mainBgPic.jpg" class="mainBg" alt="Evidence Board">
@@ -19,13 +20,20 @@
     <a href="victor.html">
     <img src="assets/victorPic.png" class="overlay-images" alt="Victor's Photo">
 </a>
-    <img src="assets/newsPaperPic.png" class="overlay-images" alt="Newspaper Article">
+    <img src="assets/newsPaperPic.png" class="overlay-images" data-popup data-popup-src="assets/newsPaperPopup.png" alt="Newspaper Article">
     <a href="vermeerfile.html">
     <img src="assets/vermeerCasePic.png" class="overlay-images" alt="Case File">
 </a>
-    <img src="assets/bluePrintPic.png" class="overlay-images" alt="Blueprint of Gallery">
+    <img src="assets/bluePrintPic.png" class="overlay-images" data-popup data-popup-src="assets/bluePrintPopup.png" alt="Blueprint of Gallery">
     <img src="assets/victorsReviewPic.png" class="overlay-images" alt="Victor's Written Review">
     <img src="assets/string.png" class="overlay-images">
+    </div>
+
+    <div id="modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <img id="modal-img" src="" alt="">
+        </div>
     </div>
 
 </body>
