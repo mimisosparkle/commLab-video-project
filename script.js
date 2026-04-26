@@ -57,68 +57,57 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.target === solveModal) resetSolveModal();
         });
 
-    
+     
         let firstAttempt = true;
 
 const newEvidence = document.getElementById('new-evidence');
 const rethinkBtn = document.getElementById('rethink-btn');
 
-
-function hideAll() {
-    solveQuestion.classList.add('hidden');
-    solveResult.classList.add('hidden');
-    newEvidence.classList.add('hidden');
-}
-
-
-document.querySelectorAll('#suspect-btns .suspect-choice').forEach(btn => {
+document.querySelectorAll('.suspect-choice').forEach(btn => {
     btn.addEventListener('click', () => {
-
         const suspect = btn.dataset.suspect;
 
         if (firstAttempt) {
             firstAttempt = false;
 
-            hideAll();
-            newEvidence.classList.remove('hidden'); 
+            solveQuestion.style.display = 'none';
+            newEvidence.classList.remove('hidden');
 
         } else {
-            hideAll();
-            solveResult.classList.remove('hidden'); 
+            solveQuestion.style.display = 'none';
+            newEvidence.classList.add('hidden');
+            solveResult.classList.remove('hidden');
 
             if (suspect === 'scarlet') {
                 resultLabel.style.color = '#6a9e6a';
                 resultLabel.textContent = 'Case Closed';
                 resultTitle.textContent = 'You got it.';
-                resultBody.textContent = "Scarlet claimed she saw the thief's face reflected in the painting's glass — but the Insurance Appraisal confirms it was covered by Moth-Eye Nano-Structured Glass, engineered to produce zero reflection. She described a physical impossibility. Scarlet stole the Vermeer.";
+                resultBody.textContent = 'Scarlet claimed she saw the thief\'s face reflected in the painting\'s glass — but the Insurance Appraisal confirms it was covered by Moth-Eye Nano-Structured Glass, engineered to produce zero reflection. She described a physical impossibility. Scarlet stole the Vermeer.';
             } else {
                 resultLabel.style.color = '#9e6a6a';
                 resultLabel.textContent = 'Wrong Suspect';
                 resultTitle.textContent = 'Not quite.';
-                resultBody.textContent = "The evidence doesn't point there. Look closer at the case files — one suspect described something that couldn't have happened.";
+                resultBody.textContent = 'The evidence doesn\'t point there. Look closer at the case files — one suspect described something that couldn\'t have happened.';
             }
         }
     });
 });
 
-// rethink button 
 rethinkBtn.addEventListener('click', () => {
-    hideAll();
-    solveQuestion.classList.remove('hidden');
+    newEvidence.classList.add('hidden');
+    solveQuestion.style.display = '';
 });
+        resultClose.addEventListener('click', resetSolveModal);
 
-resultClose.addEventListener('click', resetSolveModal);
-
-function resetSolveModal() {
-    solveModal.classList.remove('active');
-    solveCaseBtn.classList.remove('hidden');
-
-    setTimeout(() => {
-        firstAttempt = true;
-        hideAll();
-        solveQuestion.classList.remove('hidden');
-    }, 300);
-}
+        function resetSolveModal() {
+            solveModal.classList.remove('active');
+            solveCaseBtn.classList.remove('hidden');
+            setTimeout(() => {
+                solveQuestion.style.display = '';
+                solveResult.classList.add('hidden');
+            }, 300);
+        }
+    }
 
     // --- Evidence board ---
     const container = document.querySelector('.images-container');
