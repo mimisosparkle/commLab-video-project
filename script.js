@@ -63,51 +63,73 @@ document.addEventListener('DOMContentLoaded', () => {
 const newEvidence = document.getElementById('new-evidence');
 const rethinkBtn = document.getElementById('rethink-btn');
 
-document.querySelectorAll('.suspect-choice').forEach(btn => {
+
+function showScreen(screen) {
+    solveQuestion.classList.add('hidden');
+    solveResult.classList.add('hidden');
+    newEvidence.classList.add('hidden');
+
+    screen.classList.remove('hidden');
+}
+
+
+solveCaseBtn.addEventListener('click', () => {
+    solveModal.classList.add('active');
+    solveCaseBtn.classList.add('hidden');
+
+    firstAttempt = true;
+    showScreen(solveQuestion);
+});
+
+//  SUSPECT BUTTONS
+document.querySelectorAll('#suspect-btns .suspect-choice').forEach(btn => {
     btn.addEventListener('click', () => {
+
         const suspect = btn.dataset.suspect;
 
+        // FIRST CLICK → evidence
         if (firstAttempt) {
             firstAttempt = false;
+            showScreen(newEvidence);
+            return;
+        }
 
-            solveQuestion.style.display = 'none';
-            newEvidence.classList.remove('hidden');
+        // SECOND CLICK 
+        showScreen(solveResult);
 
+        if (suspect === 'scarlet') {
+            resultLabel.style.color = '#6a9e6a';
+            resultLabel.textContent = 'Case Closed';
+            resultTitle.textContent = 'You got it.';
+            resultBody.textContent =
+                "Scarlet described seeing a reflection in glass that produces none. That’s impossible. She’s the thief.";
         } else {
-            solveQuestion.style.display = 'none';
-            newEvidence.classList.add('hidden');
-            solveResult.classList.remove('hidden');
-
-            if (suspect === 'scarlet') {
-                resultLabel.style.color = '#6a9e6a';
-                resultLabel.textContent = 'Case Closed';
-                resultTitle.textContent = 'You got it.';
-                resultBody.textContent = 'Scarlet claimed she saw the thief\'s face reflected in the painting\'s glass — but the Insurance Appraisal confirms it was covered by Moth-Eye Nano-Structured Glass, engineered to produce zero reflection. She described a physical impossibility. Scarlet stole the Vermeer.';
-            } else {
-                resultLabel.style.color = '#9e6a6a';
-                resultLabel.textContent = 'Wrong Suspect';
-                resultTitle.textContent = 'Not quite.';
-                resultBody.textContent = 'The evidence doesn\'t point there. Look closer at the case files — one suspect described something that couldn\'t have happened.';
-            }
+            resultLabel.style.color = '#9e6a6a';
+            resultLabel.textContent = 'Wrong Suspect';
+            resultTitle.textContent = 'Not quite.';
+            resultBody.textContent =
+                "Look closer. One suspect described something that could not have happened.";
         }
     });
 });
 
+//  RECONSIDER BUTTON
 rethinkBtn.addEventListener('click', () => {
-    newEvidence.classList.add('hidden');
-    solveQuestion.style.display = '';
+    showScreen(solveQuestion);
 });
-        resultClose.addEventListener('click', resetSolveModal);
 
-        function resetSolveModal() {
-            solveModal.classList.remove('active');
-            solveCaseBtn.classList.remove('hidden');
-            setTimeout(() => {
-                solveQuestion.style.display = '';
-                solveResult.classList.add('hidden');
-            }, 300);
-        }
-    }
+//  RESET MODAL
+resultClose.addEventListener('click', resetSolveModal);
+
+function resetSolveModal() {
+    solveModal.classList.remove('active');
+    solveCaseBtn.classList.remove('hidden');
+
+    setTimeout(() => {
+        firstAttempt = true;
+        showScreen(solveQuestion);
+    }, 300);
+}
 
     // --- Evidence board ---
     const container = document.querySelector('.images-container');
