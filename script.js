@@ -1,129 +1,86 @@
-document.addEventListener('DOMContentLoaded', () => {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Victor's File</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 
-    // --- Intro overlay ---
-    const overlay = document.getElementById('intro-overlay');
-    if (overlay) {
-        const introScreen  = document.getElementById('intro-screen');
-        const videoScreen  = document.getElementById('video-screen');
-        const crimeVideo   = document.getElementById('crime-video');
-        const afterMsg     = document.getElementById('after-video-msg');
-        const watchBtn     = document.getElementById('watch-btn');
-        const solveBtn     = document.getElementById('solve-btn');
+<body class="case-page" style="background: url('assets/fileVictor.png') no-repeat top center / 100% auto;">
 
-        watchBtn.addEventListener('click', () => {
-            introScreen.classList.add('fade-out');
+    <a class="back-btn" href="index.html?skip">&#8592; Back</a>
 
-            setTimeout(() => {
-                introScreen.style.display = 'none';
-                videoScreen.style.display = 'flex';
-                videoScreen.classList.add('crt-on');
+    <!-- Content -->
+    <div class="case-file">
 
-                setTimeout(() => {
-                    videoScreen.classList.add('visible');
-                    crimeVideo.play();
-                }, 100);
-            }, 600);
-        });
+        <!-- LEFT SIDE -->
+        <div class="suspect-left">
+            <p class="case-label">Suspect File</p>
+            <h1>Victor</h1>
+            <h2>Disgraced Art Critic</h2>
 
-        crimeVideo.addEventListener('ended', () => {
-            afterMsg.classList.add('visible');
-        });
+            <div class="info-box">
+                <p><strong>Suspect No:</strong> 01</p>
+                <p><strong>Occupation:</strong> Art Critic</p>
+                <p><strong>Age:</strong> 41</p>
+                <p><strong>Gender:</strong> Female</p>
+                <p><strong>Status:</strong> Suspect</p>
+                <p><strong>Last Seen:</strong> Terrace at 10:15 PM</p>
+            </div>
 
-        solveBtn.addEventListener('click', () => {
-            overlay.classList.add('dismissed');
-            setTimeout(() => overlay.remove(), 1200);
-        });
-    }
+            <div class="notes-box">
+                <h3>Profile Notes</h3>
+                <p>
+                    Victor is arrogant, and acutely aware of his fall from relevance.
+                    He speaks in paragraphs and treats every conversation as a lecture.
+                    His expertise is real, but his ego makes him difficult to trust.
+                </p>
+            </div>
 
-    // --- Evidence board ---
-    const container = document.querySelector('.images-container');
-    if (!container) return;
+            <div class="notes-box">
+                <h3>Assessment</h3>
+                <p><strong>Credibility:</strong> Likely truthful</p>
+                <p><strong>Suspicion Level:</strong> Low</p>
+            </div>
+        </div>
 
-    const anchors = [...document.querySelectorAll('.images-container a')];
-    const popupImgs = [...document.querySelectorAll('.images-container [data-popup]')];
-    const modal = document.getElementById('modal');
-    const modalImg = document.getElementById('modal-img');
-    const canvasCache = new Map();
+        <!-- RIGHT SIDE -->
+        <div class="suspect-right">
 
-    function getCanvas(img) {
-        if (canvasCache.has(img)) return canvasCache.get(img);
-        const canvas = document.createElement('canvas');
-        canvas.width = img.naturalWidth;
-        canvas.height = img.naturalHeight;
-        canvas.getContext('2d').drawImage(img, 0, 0);
-        canvasCache.set(img, canvas);
-        return canvas;
-    }
+            <h3>Interview Evidence</h3>
 
-    function isOpaqueAt(img, clientX, clientY) {
-        const rect = img.getBoundingClientRect();
-        const x = Math.round((clientX - rect.left) * img.naturalWidth / rect.width);
-        const y = Math.round((clientY - rect.top) * img.naturalHeight / rect.height);
-        if (x < 0 || y < 0 || x >= img.naturalWidth || y >= img.naturalHeight) return false;
-        try {
-            return getCanvas(img).getContext('2d').getImageData(x, y, 1, 1).data[3] > 10;
-        } catch {
-            return true;
-        }
-    }
+            <!-- YouTube Video -->
+            <div class="case-video">
+                <iframe
+                    src="https://www.youtube.com/embed/fXL5asyxlJA"
+                    title="Victor Interview"
+                    allowfullscreen>
+                </iframe>
+            </div>
 
-    function getHitAnchor(clientX, clientY) {
-        for (const anchor of anchors) {
-            const img = anchor.querySelector('img');
-            if (isOpaqueAt(img, clientX, clientY)) return anchor;
-        }
-        return null;
-    }
+            <div class="statement-box">
+                <h3>Statement Summary</h3>
+                <p>
+                    Victor claims he entered the study at 9:55 PM to examine the painting's authenticity,
+                    suspecting it was made by a student rather than Vermeer. A guest bumped his arm and he
+                    spilled coffee on the frame. He retreated to the washroom for 10–15 minutes, then moved
+                    to the terrace — the server could not confirm he was present at 10:15 PM.
+                </p>
+            </div>
 
-    function getHitPopup(clientX, clientY) {
-        for (const img of popupImgs) {
-            if (isOpaqueAt(img, clientX, clientY)) return img;
-        }
-        return null;
-    }
+            <div class="statement-box">
+                <h3>Observation</h3>
+                <p>
+                    Victor's complaint about the study's heat is consistent with the floor plan — the room
+                    is small and poorly ventilated. This corroborates rather than undermines his account.
+                    His alibi has a named witness and a precise timestamp.
+                </p>
+            </div>
 
-    function openModal(src, alt) {
-        modalImg.src = src;
-        modalImg.alt = alt;
-        modal.classList.add('active');
-    }
+        </div>
 
-    function closeModal() {
-        modal.classList.remove('active');
-        modalImg.src = '';
-    }
+    </div>
 
-    document.querySelector('.modal-close').addEventListener('click', closeModal);
-    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
-    anchors.forEach(a => a.addEventListener('click', e => e.preventDefault()));
-
-    container.addEventListener('click', e => {
-        const anchor = getHitAnchor(e.clientX, e.clientY);
-        if (anchor) { window.location.href = anchor.href; return; }
-
-        const popup = getHitPopup(e.clientX, e.clientY);
-        if (popup) openModal(popup.dataset.popupSrc || popup.src, popup.alt);
-    });
-
-    container.addEventListener('mousemove', e => {
-        const hitAnchor = getHitAnchor(e.clientX, e.clientY);
-        anchors.forEach(a => {
-            a.querySelector('img').style.filter = a === hitAnchor ? 'brightness(1.2)' : '';
-        });
-
-        const hitPopup = hitAnchor ? null : getHitPopup(e.clientX, e.clientY);
-        popupImgs.forEach(img => {
-            img.style.filter = img === hitPopup ? 'brightness(1.2)' : '';
-        });
-
-        container.style.cursor = (hitAnchor || hitPopup) ? 'pointer' : '';
-    });
-
-    container.addEventListener('mouseleave', () => {
-        anchors.forEach(a => a.querySelector('img').style.filter = '');
-        popupImgs.forEach(img => img.style.filter = '');
-        container.style.cursor = '';
-    });
-});
+</body>
+</html>
