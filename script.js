@@ -37,6 +37,58 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- Solve case ---
+    const solveCaseBtn  = document.getElementById('solve-case-btn');
+    const solveModal    = document.getElementById('solve-modal');
+    const solveQuestion = document.getElementById('solve-question');
+    const solveResult   = document.getElementById('solve-result');
+    const resultLabel   = document.getElementById('result-label');
+    const resultTitle   = document.getElementById('result-title');
+    const resultBody    = document.getElementById('result-body');
+    const resultClose   = document.getElementById('result-close');
+
+    if (solveCaseBtn) {
+        solveCaseBtn.addEventListener('click', () => {
+            solveModal.classList.add('active');
+            solveCaseBtn.classList.add('hidden');
+        });
+
+        solveModal.addEventListener('click', e => {
+            if (e.target === solveModal) resetSolveModal();
+        });
+
+        document.querySelectorAll('.suspect-choice').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const suspect = btn.dataset.suspect;
+                solveQuestion.style.display = 'none';
+                solveResult.classList.remove('hidden');
+
+                if (suspect === 'scarlet') {
+                    resultLabel.style.color = '#6a9e6a';
+                    resultLabel.textContent = 'Case Closed';
+                    resultTitle.textContent = 'You got it.';
+                    resultBody.textContent = 'Scarlet claimed she saw the thief\'s face reflected in the painting\'s glass — but the Insurance Appraisal confirms it was covered by Moth-Eye Nano-Structured Glass, engineered to produce zero reflection. She described a physical impossibility. Scarlet stole the Vermeer.';
+                } else {
+                    resultLabel.style.color = '#9e6a6a';
+                    resultLabel.textContent = 'Wrong Suspect';
+                    resultTitle.textContent = 'Not quite.';
+                    resultBody.textContent = 'The evidence doesn\'t point there. Look closer at the case files — one suspect described something that couldn\'t have happened.';
+                }
+            });
+        });
+
+        resultClose.addEventListener('click', resetSolveModal);
+
+        function resetSolveModal() {
+            solveModal.classList.remove('active');
+            solveCaseBtn.classList.remove('hidden');
+            setTimeout(() => {
+                solveQuestion.style.display = '';
+                solveResult.classList.add('hidden');
+            }, 300);
+        }
+    }
+
     // --- Evidence board ---
     const container = document.querySelector('.images-container');
     if (!container) return;
@@ -88,11 +140,13 @@ document.addEventListener('DOMContentLoaded', () => {
         modalImg.src = src;
         modalImg.alt = alt;
         modal.classList.add('active');
+        if (solveCaseBtn) solveCaseBtn.classList.add('hidden');
     }
 
     function closeModal() {
         modal.classList.remove('active');
         modalImg.src = '';
+        if (solveCaseBtn) solveCaseBtn.classList.remove('hidden');
     }
 
     document.querySelector('.modal-close').addEventListener('click', closeModal);
