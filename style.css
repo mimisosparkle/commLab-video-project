@@ -502,19 +502,19 @@
 /* single column */
 .case-file.single {
     grid-template-columns: 1fr; 
-    max-width: 700px;
+    max-width: 1200px;
     margin: 0 auto;
     padding-top: 12%;
 }
 
 /* centering text */
 .case-title {
-    font-size: 38px;
+    font-size: 62px;
     margin-bottom: 4px;
 }
 
 .case-subtitle {
-    font-size: 15px;
+    font-size: 28px;
 }
 
 /* centered in box */
@@ -523,11 +523,11 @@
 }
 
 .case-main h1 {
-    font-size: 40px;
+    font-size: 56px;
 }
 
 .case-main h2 {
-    font-size: 18px;
+    font-size: 28px;
     margin-bottom: 18px;
 }
 
@@ -538,13 +538,13 @@
 
 
 .content-box h3 {
-    font-size: 20px;
+    font-size: 35px;
     text-decoration: underline;
     margin-bottom: 15px;
 }
 
 .content-box p {
-    font-size: 17px;
+    font-size: 20px;
     line-height: 1.4;
     margin-bottom: 15px;
 }
