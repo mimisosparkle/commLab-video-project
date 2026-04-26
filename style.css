@@ -44,6 +44,28 @@
     filter: brightness(1.2); /* photo lights up */
 }
 
+/* --- Back Button --- */
+
+.back-btn {
+    position: fixed;
+    top: 18px;
+    left: 18px;
+    z-index: 100;
+    background: rgba(31, 26, 20, 0.85);
+    color: #f5f0e8;
+    font-family: Georgia, serif;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 8px 16px;
+    border: 1px solid #f5f0e8;
+}
+
+.back-btn:hover {
+    background: rgba(31, 26, 20, 1);
+}
+
 /* --- Scarlet Case File Layout --- */
 
 .case-page {
