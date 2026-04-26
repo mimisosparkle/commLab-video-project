@@ -541,6 +541,10 @@
     font-size: 35px;
     text-decoration: underline;
     margin-bottom: 15px;
+} 
+
+.hidden {
+    display: none !important;
 }
 
 .content-box p {
