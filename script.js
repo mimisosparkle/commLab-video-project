@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.target === solveModal) resetSolveModal();
         });
 
-        let firstAttempt = true;
+       let firstAttempt = true;
 
 const newEvidence = document.getElementById('new-evidence');
 const rethinkBtn = document.getElementById('rethink-btn');
@@ -65,31 +65,26 @@ const rethinkBtn = document.getElementById('rethink-btn');
 document.querySelectorAll('.suspect-choice').forEach(btn => {
     btn.addEventListener('click', (e) => {
 
-        // 🚫 stop EVERYTHING else from triggering
-        e.stopImmediatePropagation();
-
-        // ignore rethink button
         if (btn.id === 'rethink-btn') return;
 
         const suspect = btn.dataset.suspect;
 
-        // always hide result first
+        // ALWAYS reset everything first
+        solveQuestion.style.display = 'none';
         solveResult.classList.add('hidden');
+        newEvidence.classList.add('hidden');
 
         if (firstAttempt) {
             firstAttempt = false;
 
-            // hide question
-            solveQuestion.style.display = 'none';
+            // show ONLY evidence
+            newEvidence.style.display = 'block';
 
-            // show ONLY new evidence
-            newEvidence.classList.remove('hidden');
-
-            return; // 🚨 THIS IS THE CRITICAL LINE
+            return;
         }
 
-        // SECOND ATTEMPT ONLY
-        newEvidence.classList.add('hidden');
+        // SECOND ATTEMPT
+        solveResult.style.display = 'block';
         solveResult.classList.remove('hidden');
 
         if (suspect === 'scarlet') {
@@ -106,20 +101,17 @@ document.querySelectorAll('.suspect-choice').forEach(btn => {
 
     });
 });
+        
+rethinkBtn.addEventListener('click', () => {
 
-rethinkBtn.addEventListener('click', () => {
-    newEvidence.classList.add('hidden');
-    solveQuestion.style.display = '';
+    // hide evidence
+    newEvidence.style.display = 'none';
+
+    // show choices again cleanly
+    solveQuestion.style.display = 'block';
+
 });
 
-rethinkBtn.addEventListener('click', () => {
-    newEvidence.classList.add('hidden');
-    solveQuestion.style.display = '';
-});
-rethinkBtn.addEventListener('click', () => {
-    newEvidence.classList.add('hidden');
-    solveQuestion.style.display = '';
-});
         resultClose.addEventListener('click', resetSolveModal);
 
         function resetSolveModal() {
