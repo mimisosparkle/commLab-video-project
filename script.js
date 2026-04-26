@@ -78,13 +78,14 @@ document.querySelectorAll('.suspect-choice').forEach(btn => {
             firstAttempt = false;
 
             // ONLY show evidence
-            newEvidence.classList.remove('hidden');
-            return;
-        }
+            // SECOND ATTEMPT → show result
 
-        // SECOND ATTEMPT → show result
-        solveResult.classList.remove('hidden');
+// 🚨 hide EVERYTHING first
+solveQuestion.classList.add('hidden');
+newEvidence.classList.add('hidden');
 
+// THEN show result
+solveResult.classList.remove('hidden');
         if (suspect === 'scarlet') {
             resultLabel.style.color = '#6a9e6a';
             resultLabel.textContent = 'Case Closed';
