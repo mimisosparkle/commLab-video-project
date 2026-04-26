@@ -1,4 +1,41 @@
 document.addEventListener('DOMContentLoaded', () => {
+
+    // --- Intro overlay ---
+    const overlay = document.getElementById('intro-overlay');
+    if (overlay) {
+        const introScreen  = document.getElementById('intro-screen');
+        const videoScreen  = document.getElementById('video-screen');
+        const crimeVideo   = document.getElementById('crime-video');
+        const afterMsg     = document.getElementById('after-video-msg');
+        const watchBtn     = document.getElementById('watch-btn');
+        const solveBtn     = document.getElementById('solve-btn');
+
+        watchBtn.addEventListener('click', () => {
+            introScreen.classList.add('fade-out');
+
+            setTimeout(() => {
+                introScreen.style.display = 'none';
+                videoScreen.style.display = 'flex';
+                videoScreen.classList.add('crt-on');
+
+                setTimeout(() => {
+                    videoScreen.classList.add('visible');
+                    crimeVideo.play();
+                }, 100);
+            }, 600);
+        });
+
+        crimeVideo.addEventListener('ended', () => {
+            afterMsg.classList.add('visible');
+        });
+
+        solveBtn.addEventListener('click', () => {
+            overlay.classList.add('dismissed');
+            setTimeout(() => overlay.remove(), 1200);
+        });
+    }
+
+    // --- Evidence board ---
     const container = document.querySelector('.images-container');
     if (!container) return;
 
