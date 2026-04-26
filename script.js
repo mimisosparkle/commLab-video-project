@@ -62,28 +62,28 @@ document.addEventListener('DOMContentLoaded', () => {
 const newEvidence = document.getElementById('new-evidence');
 const rethinkBtn = document.getElementById('rethink-btn');
 
-let firstAttempt = true;
-
-const newEvidence = document.getElementById('new-evidence');
-const rethinkBtn = document.getElementById('rethink-btn');
-
 document.querySelectorAll('.suspect-choice').forEach(btn => {
     btn.addEventListener('click', () => {
 
-        // This stops the reconsider button from acting like a suspect choice
+        // stop reconsider button from triggering this
         if (btn.id === 'rethink-btn') return;
 
         const suspect = btn.dataset.suspect;
 
+        // 🚫 ALWAYS hide result first (this is the fix)
+        solveResult.classList.add('hidden');
+
         if (firstAttempt) {
             firstAttempt = false;
 
+            // hide question
             solveQuestion.style.display = 'none';
-            solveResult.classList.add('hidden');
+
+            // show ONLY new evidence
             newEvidence.classList.remove('hidden');
 
         } else {
-            solveQuestion.style.display = 'none';
+            // second attempt → now show result
             newEvidence.classList.add('hidden');
             solveResult.classList.remove('hidden');
 
