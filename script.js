@@ -63,28 +63,26 @@ const newEvidence = document.getElementById('new-evidence');
 const rethinkBtn = document.getElementById('rethink-btn');
 
 document.querySelectorAll('.suspect-choice').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+    btn.addEventListener('click', () => {
 
         if (btn.id === 'rethink-btn') return;
 
         const suspect = btn.dataset.suspect;
 
-        // ALWAYS reset everything first
-        solveQuestion.style.display = 'none';
+        // reset ALL states first
+        solveQuestion.classList.add('hidden');
         solveResult.classList.add('hidden');
         newEvidence.classList.add('hidden');
 
         if (firstAttempt) {
             firstAttempt = false;
 
-            // show ONLY evidence
-            newEvidence.style.display = 'block';
-
+            // ONLY show evidence
+            newEvidence.classList.remove('hidden');
             return;
         }
 
-        // SECOND ATTEMPT
-        solveResult.style.display = 'block';
+        // SECOND ATTEMPT → show result
         solveResult.classList.remove('hidden');
 
         if (suspect === 'scarlet') {
@@ -104,27 +102,26 @@ document.querySelectorAll('.suspect-choice').forEach(btn => {
         
 rethinkBtn.addEventListener('click', () => {
 
-    // hide evidence
-    newEvidence.style.display = 'none';
-
-    // show choices again cleanly
-    solveQuestion.style.display = 'block';
+    newEvidence.classList.add('hidden');
+    solveQuestion.classList.remove('hidden');
 
 });
 
         resultClose.addEventListener('click', resetSolveModal);
 
-        function resetSolveModal() {
+       function resetSolveModal() {
     solveModal.classList.remove('active');
     solveCaseBtn.classList.remove('hidden');
 
     setTimeout(() => {
         firstAttempt = true;
-        solveQuestion.style.display = '';
+
+        solveQuestion.classList.remove('hidden');
         solveResult.classList.add('hidden');
         newEvidence.classList.add('hidden');
+
     }, 300);
-} 
+}
     }
 
     // --- Evidence board ---
