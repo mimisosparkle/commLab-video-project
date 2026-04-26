@@ -38,36 +38,57 @@
 
     <button id="solve-case-btn">Think you solved the case?</button>
 
-    <div id="solve-modal">
+   <div id="solve-modal">
 
-        <div id="solve-modal-inner">
+    <div id="solve-modal-inner">
 
-            <div id="solve-question">
-@@ -57,34 +58,52 @@
-                <h2 id="result-title"></h2>
-                <p id="result-body"></p>
-                <button id="result-close">Close</button>
+        <!-- QUESTION SCREEN -->
+        <div id="solve-question">
+            <p class="solve-eyebrow">Case File #4471</p>
+            <h2 id="solve-title">Who stole the Vermeer?</h2>
+            <p id="solve-subtitle">Choose your suspect carefully.</p>
 
-                    <div id="new-evidence" class="hidden">
+            <div id="suspect-btns">
+                <button class="suspect-choice" data-suspect="elena">
+                    Elena<span>Rival Gallery Owner</span>
+                </button>
+                <button class="suspect-choice" data-suspect="scarlet">
+                    Scarlet<span>Head of Security</span>
+                </button>
+                <button class="suspect-choice" data-suspect="victor">
+                    Victor<span>Disgraced Art Critic</span>
+                </button>
+            </div>
+        </div>
 
-        <p class="solve-eyebrow">Update</p>
-        <h2>Wait… New Evidence Just Dropped</h2>
+        <!-- NEW EVIDENCE SCREEN -->
+        <div id="new-evidence" class="hidden">
+            <p class="solve-eyebrow">Update</p>
+            <h2>Wait… New Evidence Just Dropped</h2>
 
-        <img src="assets/newEvidence.png" 
-             alt="New Evidence"
-             style="width:80%; max-width:600px; border-radius:10px; margin:20px 0;">
+            <img src="assets/newEvidence.png"
+                 alt="New Evidence"
+                 style="width:80%; max-width:600px; border-radius:10px; margin:20px 0;">
 
-        <p>
-            Close inspection of protective glass under direct light.  
-            No reflection observed.
-        </p>
+            <p style="color:#aaa; margin-top:10px;">
+                Close inspection of protective glass under direct light. No reflection observed.
+            </p>
 
-        <button id="rethink-btn">Reconsider Your Answer</button>
+            <button id="rethink-btn" class="suspect-choice">
+                Reconsider Your Answer
+            </button>
+        </div>
+
+        <!-- RESULT SCREEN -->
+        <div id="solve-result" class="hidden">
+            <p id="result-label"></p>
+            <h2 id="result-title"></h2>
+            <p id="result-body"></p>
+            <button id="result-close">Close</button>
+        </div>
 
     </div>
-            </div>
-
-        </div>
+</div>
     </div>
 
     <div id="intro-overlay">
