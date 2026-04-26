@@ -50,11 +50,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const newEvidence = document.getElementById('new-evidence');
     const rethinkBtn  = document.getElementById('rethink-btn');
 
+solveQuestion.style.display = 'block';
+solveResult.style.display = 'none';
+newEvidence.style.display = 'none';
+
     let firstAttempt = true;
 
     //  no overlap
   function showScreen(screen) {
-    // reset
     solveQuestion.classList.add('hidden');
     solveResult.classList.add('hidden');
     newEvidence.classList.add('hidden');
