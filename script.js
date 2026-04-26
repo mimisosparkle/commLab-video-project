@@ -43,6 +43,7 @@ const rethinkBtn    = document.getElementById('rethink-btn');
 
   
     // --- Solve case ---
+// --- Solve case ---
 const solveCaseBtn  = document.getElementById('solve-case-btn');
 const solveModal    = document.getElementById('solve-modal');
 const solveQuestion = document.getElementById('solve-question');
@@ -57,22 +58,26 @@ const rethinkBtn    = document.getElementById('rethink-btn');
 
 let firstAttempt = true;
 
+
 function hideAllSolveScreens() {
     solveQuestion.style.display = 'none';
     solveResult.style.display = 'none';
     newEvidence.style.display = 'none';
 }
 
+//  show question
 function showQuestion() {
     hideAllSolveScreens();
     solveQuestion.style.display = 'block';
 }
 
+//  show new evidence
 function showEvidence() {
     hideAllSolveScreens();
     newEvidence.style.display = 'block';
 }
 
+//  show final result
 function showResult(suspect) {
     hideAllSolveScreens();
     solveResult.style.display = 'block';
@@ -90,6 +95,7 @@ function showResult(suspect) {
     }
 }
 
+
 function resetSolveModal() {
     solveModal.classList.remove('active');
     solveCaseBtn.classList.remove('hidden');
@@ -99,37 +105,43 @@ function resetSolveModal() {
 }
 
 if (solveCaseBtn) {
+
+    // OPEN MODAL
     solveCaseBtn.addEventListener('click', () => {
         solveModal.classList.add('active');
         solveCaseBtn.classList.add('hidden');
+
         firstAttempt = true;
-        showQuestion();
+        showQuestion(); 
     });
 
+    // CLICK OUTSIDE CLOSE
     solveModal.addEventListener('click', e => {
         if (e.target === solveModal) resetSolveModal();
     });
 
+    // SUSPECT BUTTONS 
     document.querySelectorAll('#suspect-btns .suspect-choice').forEach(btn => {
         btn.addEventListener('click', () => {
             const suspect = btn.dataset.suspect;
 
             if (firstAttempt) {
                 firstAttempt = false;
-                showEvidence();
+                showEvidence(); // FIRST CLICK → evidence only
             } else {
-                showResult(suspect);
+                showResult(suspect); // SECOND CLICK → result
             }
         });
     });
 
+    // RECONSIDER BUTTON
     rethinkBtn.addEventListener('click', () => {
         showQuestion();
     });
 
+    // CLOSE RESULT
     resultClose.addEventListener('click', resetSolveModal);
 }
-
     // --- Evidence board ---
     const container = document.querySelector('.images-container');
     if (!container) return;
