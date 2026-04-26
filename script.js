@@ -41,85 +41,94 @@ const rethinkBtn    = document.getElementById('rethink-btn');
         });
     }
 
+  
     // --- Solve case ---
-    const solveCaseBtn  = document.getElementById('solve-case-btn');
-    const solveModal    = document.getElementById('solve-modal');
-    const solveQuestion = document.getElementById('solve-question');
-    const solveResult   = document.getElementById('solve-result');
-    const resultLabel   = document.getElementById('result-label');
-    const resultTitle   = document.getElementById('result-title');
-    const resultBody    = document.getElementById('result-body');
-    const resultClose   = document.getElementById('result-close');
+const solveCaseBtn  = document.getElementById('solve-case-btn');
+const solveModal    = document.getElementById('solve-modal');
+const solveQuestion = document.getElementById('solve-question');
+const solveResult   = document.getElementById('solve-result');
+const newEvidence   = document.getElementById('new-evidence');
 
-    if (solveCaseBtn) {
-        solveCaseBtn.addEventListener('click', () => {
-            solveModal.classList.add('active');
-            solveCaseBtn.classList.add('hidden');
-        });
+const resultLabel   = document.getElementById('result-label');
+const resultTitle   = document.getElementById('result-title');
+const resultBody    = document.getElementById('result-body');
+const resultClose   = document.getElementById('result-close');
+const rethinkBtn    = document.getElementById('rethink-btn');
 
-        solveModal.addEventListener('click', e => {
-            if (e.target === solveModal) resetSolveModal();
-        }); 
+let firstAttempt = true;
 
-        function showOnly(screen) {
-    solveQuestion.classList.add('hidden');
-    solveResult.classList.add('hidden');
-    newEvidence.classList.add('hidden');
-
-    screen.classList.remove('hidden');
+function hideAllSolveScreens() {
+    solveQuestion.style.display = 'none';
+    solveResult.style.display = 'none';
+    newEvidence.style.display = 'none';
 }
 
-      let firstAttempt = true;
+function showQuestion() {
+    hideAllSolveScreens();
+    solveQuestion.style.display = 'block';
+}
 
-document.querySelectorAll('.suspect-choice').forEach(btn => {
-    btn.addEventListener('click', () => {
+function showEvidence() {
+    hideAllSolveScreens();
+    newEvidence.style.display = 'block';
+}
 
-        if (btn.id === 'rethink-btn') return;
+function showResult(suspect) {
+    hideAllSolveScreens();
+    solveResult.style.display = 'block';
 
-        const suspect = btn.dataset.suspect;
+    if (suspect === 'scarlet') {
+        resultLabel.style.color = '#6a9e6a';
+        resultLabel.textContent = 'Case Closed';
+        resultTitle.textContent = 'You got it.';
+        resultBody.textContent = "Scarlet claimed she saw the thief's face reflected in the painting's glass, but the Insurance Appraisal confirms it was covered by Moth-Eye Nano-Structured Glass, engineered to produce zero reflection. She described a physical impossibility. Scarlet stole the Vermeer.";
+    } else {
+        resultLabel.style.color = '#9e6a6a';
+        resultLabel.textContent = 'Wrong Suspect';
+        resultTitle.textContent = 'Not quite.';
+        resultBody.textContent = 'The evidence does not point there. Look closer at the case files. One suspect described something that could not have happened.';
+    }
+}
 
-        if (firstAttempt) {
-            firstAttempt = false;
-
-            // 👉 ONLY show evidence
-            showOnly(newEvidence);
-            return;
-        }
-
-        // 👉 SECOND ATTEMPT → ONLY show result
-        showOnly(solveResult);
-
-        if (suspect === 'scarlet') {
-            resultLabel.style.color = '#6a9e6a';
-            resultLabel.textContent = 'Case Closed';
-            resultTitle.textContent = 'You got it.';
-            resultBody.textContent = 'Scarlet claimed she saw the thief\'s face reflected in the painting\'s glass, but the Insurance Appraisal confirms it was covered by Moth-Eye Nano-Structured Glass, engineered to produce zero reflection. She described a physical impossibility. Scarlet stole the Vermeer.';
-        } else {
-            resultLabel.style.color = '#9e6a6a';
-            resultLabel.textContent = 'Wrong Suspect';
-            resultTitle.textContent = 'Not quite.';
-            resultBody.textContent = 'The evidence does not point there. Look closer at the case files. One suspect described something that could not have happened.';
-        }
-
-    });
-});
-        
-rethinkBtn.addEventListener('click', () => {
-    showOnly(solveQuestion);
-});
-
-        resultClose.addEventListener('click', resetSolveModal);
-
-       function resetSolveModal() {
+function resetSolveModal() {
     solveModal.classList.remove('active');
     solveCaseBtn.classList.remove('hidden');
 
-    setTimeout(() => {
-        firstAttempt = true;
-        showOnly(solveQuestion);
-    }, 300);
+    firstAttempt = true;
+    showQuestion();
 }
-    }
+
+if (solveCaseBtn) {
+    solveCaseBtn.addEventListener('click', () => {
+        solveModal.classList.add('active');
+        solveCaseBtn.classList.add('hidden');
+        firstAttempt = true;
+        showQuestion();
+    });
+
+    solveModal.addEventListener('click', e => {
+        if (e.target === solveModal) resetSolveModal();
+    });
+
+    document.querySelectorAll('#suspect-btns .suspect-choice').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const suspect = btn.dataset.suspect;
+
+            if (firstAttempt) {
+                firstAttempt = false;
+                showEvidence();
+            } else {
+                showResult(suspect);
+            }
+        });
+    });
+
+    rethinkBtn.addEventListener('click', () => {
+        showQuestion();
+    });
+
+    resultClose.addEventListener('click', resetSolveModal);
+}
 
     // --- Evidence board ---
     const container = document.querySelector('.images-container');
