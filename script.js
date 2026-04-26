@@ -63,14 +63,17 @@ const newEvidence = document.getElementById('new-evidence');
 const rethinkBtn = document.getElementById('rethink-btn');
 
 document.querySelectorAll('.suspect-choice').forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (e) => {
 
-        // stop reconsider button from triggering this
+        // 🚫 stop EVERYTHING else from triggering
+        e.stopImmediatePropagation();
+
+        // ignore rethink button
         if (btn.id === 'rethink-btn') return;
 
         const suspect = btn.dataset.suspect;
 
-        // 🚫 ALWAYS hide result first (this is the fix)
+        // always hide result first
         solveResult.classList.add('hidden');
 
         if (firstAttempt) {
@@ -82,24 +85,31 @@ document.querySelectorAll('.suspect-choice').forEach(btn => {
             // show ONLY new evidence
             newEvidence.classList.remove('hidden');
 
-        } else {
-            // second attempt → now show result
-            newEvidence.classList.add('hidden');
-            solveResult.classList.remove('hidden');
-
-            if (suspect === 'scarlet') {
-                resultLabel.style.color = '#6a9e6a';
-                resultLabel.textContent = 'Case Closed';
-                resultTitle.textContent = 'You got it.';
-                resultBody.textContent = 'Scarlet claimed she saw the thief\'s face reflected in the painting\'s glass, but the Insurance Appraisal confirms it was covered by Moth-Eye Nano-Structured Glass, engineered to produce zero reflection. She described a physical impossibility. Scarlet stole the Vermeer.';
-            } else {
-                resultLabel.style.color = '#9e6a6a';
-                resultLabel.textContent = 'Wrong Suspect';
-                resultTitle.textContent = 'Not quite.';
-                resultBody.textContent = 'The evidence does not point there. Look closer at the case files. One suspect described something that could not have happened.';
-            }
+            return; // 🚨 THIS IS THE CRITICAL LINE
         }
+
+        // SECOND ATTEMPT ONLY
+        newEvidence.classList.add('hidden');
+        solveResult.classList.remove('hidden');
+
+        if (suspect === 'scarlet') {
+            resultLabel.style.color = '#6a9e6a';
+            resultLabel.textContent = 'Case Closed';
+            resultTitle.textContent = 'You got it.';
+            resultBody.textContent = 'Scarlet claimed she saw the thief\'s face reflected in the painting\'s glass, but the Insurance Appraisal confirms it was covered by Moth-Eye Nano-Structured Glass, engineered to produce zero reflection. She described a physical impossibility. Scarlet stole the Vermeer.';
+        } else {
+            resultLabel.style.color = '#9e6a6a';
+            resultLabel.textContent = 'Wrong Suspect';
+            resultTitle.textContent = 'Not quite.';
+            resultBody.textContent = 'The evidence does not point there. Look closer at the case files. One suspect described something that could not have happened.';
+        }
+
     });
+});
+
+rethinkBtn.addEventListener('click', () => {
+    newEvidence.classList.add('hidden');
+    solveQuestion.style.display = '';
 });
 
 rethinkBtn.addEventListener('click', () => {
