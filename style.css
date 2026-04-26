@@ -74,7 +74,7 @@
 }
 
 /* Main grid layout */
-.scarlet-file {
+.case-file {
     padding: 13% 9% 8%;
     display: grid;
     grid-template-columns: 36% 60%;
